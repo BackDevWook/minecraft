@@ -1,0 +1,12 @@
+name: expertplugin
+version: '${project.version}'
+main: com.example.expertplugin.ExpertPlugin
+api-version: '1.20'
+
+commands:
+  mode:
+    description: 게임 모드를 변경할 수 있습니다. (플레이어/op)
+    usage: /mode < 1 || 2 >
+  op:
+    description: 플레이어의 OP 권한을 설정합니다. (콘솔)
+    usage: /op <USER_NAME>
