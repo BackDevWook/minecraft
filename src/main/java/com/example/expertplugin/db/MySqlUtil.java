@@ -1,4 +1,4 @@
-package com.example.expertplugin.mysql;
+package com.example.expertplugin.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

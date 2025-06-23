@@ -1,9 +1,11 @@
 package com.example.expertplugin;
 
-import com.example.expertplugin.manager.server.CommandManager;
-import com.example.expertplugin.manager.server.EventManager;
+import com.example.expertplugin.manager.CommandManager;
+import com.example.expertplugin.manager.EventManager;
+import com.example.expertplugin.manager.QuestManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public final class ExpertPlugin extends JavaPlugin {
 
@@ -20,10 +22,15 @@ public final class ExpertPlugin extends JavaPlugin {
 
         // 커맨드
         CommandManager.registerAllCommands();
+        getLogger().info("CommandManger 등록 완료");
 
         // 이벤트
         EventManager eventManager = new EventManager(this);
         eventManager.registerAllListeners(this);
+
+        // 퀘스트
+        QuestManager questManager = new QuestManager();
+        questManager.loadQuests();
 
     }
 

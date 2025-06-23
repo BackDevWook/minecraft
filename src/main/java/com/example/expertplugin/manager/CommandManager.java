@@ -1,4 +1,4 @@
-package com.example.expertplugin.manager.server;
+package com.example.expertplugin.manager;
 
 import com.example.expertplugin.ExpertPlugin;
 import com.example.expertplugin.command.SelectMode;

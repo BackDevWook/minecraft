@@ -1,6 +1,6 @@
-package com.example.expertplugin.manager.server;
+package com.example.expertplugin.manager;
 
-import com.example.expertplugin.event.load.CreatePlayerData;
+import com.example.expertplugin.event.join.FirstJoinCreateUserData;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,7 +13,7 @@ public class EventManager {
     private final List<Listener> listeners = new ArrayList<Listener>();
 
     public EventManager(JavaPlugin plugin) {
-        listeners.add(new CreatePlayerData());
+        listeners.add(new FirstJoinCreateUserData());
     }
 
     public void registerAllListeners(JavaPlugin plugin) {
