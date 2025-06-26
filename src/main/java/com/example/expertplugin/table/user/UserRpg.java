@@ -7,7 +7,7 @@ import lombok.Getter;
 public class UserRpg {
 
     private Integer id;
-    private Integer userId;
+    private User userId;
     private Short level;
     private Integer exp;
     private RpgClass clazz;

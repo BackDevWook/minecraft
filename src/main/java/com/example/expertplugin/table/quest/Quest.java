@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.LinkedHashMap;
+import java.util.List;
+
 
 @Getter
 @NoArgsConstructor
@@ -20,8 +21,11 @@ public class Quest {
     private ScopeTypes scopeType;
     private boolean isRepeatable;
     private Short dailyRepeatLimit;
-    private LinkedHashMap<String, Integer> rewards; // json
-    private LinkedHashMap<String, Integer> mission; // json
+
+    // 참조용
+    private List<QuestObjectives> objectives;
+    private List<QuestRewards> rewards;
+
 
     /*
         식별자
@@ -31,7 +35,9 @@ public class Quest {
         퀘스트 주체(유저, 파티, 마을 등)
         퀘스트 반복 가능 여부
         하루 최대 반복 가능 수
-        보상 JSON
-        퀘스트 목표 JSON
+
+        - 참조용 -
+        퀘스트 목표 리스트
+        보상 리스트
      */
 }

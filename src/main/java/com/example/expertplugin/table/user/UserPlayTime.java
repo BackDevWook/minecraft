@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class UserPlayTime {
 
     private Integer id;
-    private Integer userId;
+    private User userId;
     private LocalDateTime created_at;
     private LocalDateTime recentJoinAt;
     private Integer dailyPlayTime;

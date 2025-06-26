@@ -41,70 +41,46 @@ CREATE TABLE users_play_time
     CONSTRAINT fk_users_play_time_users FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE towns
-(
-    id           INT PRIMARY KEY AUTO_INCREMENT,
-    name         VARCHAR(12) NOT NULL,
-    level        SMALLINT    NOT NULL DEFAULT 1,
-    town_point   INT         NOT NULL DEFAULT 0,
-    created_at   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    disbanded_at DATETIME    NULL,
-    is_disbanded BOOLEAN     NOT NULL DEFAULT FALSE
-);
-
-CREATE TABLE town_members
-(
-    id        INT PRIMARY KEY AUTO_INCREMENT,
-    joined_at DATETIME                              NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    left_at   DATETIME                              NULL,
-    role      ENUM ('MASTER', 'DEPUTY', 'VILLAGER') NOT NULL DEFAULT 'VILLAGER',
-    town_id   INT                                NOT NULL,
-    user_id   INT                                   NOT NULL,
-    CONSTRAINT fk_town_members_towns FOREIGN KEY (town_id) REFERENCES towns (id) ON DELETE CASCADE,
-    CONSTRAINT fk_town_members_users FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-);
-
-
 CREATE TABLE quests
 (
-    id                 int PRIMARY KEY AUTO_INCREMENT,
-    name               VARCHAR(30)                                                       NOT NULL,
-    quest_type         ENUM ('NORMAL', 'REPEAT', 'STORY', 'ACHIEVEMENT', 'CLASS_CHANGE') NOT NULL,
-    scope_type         ENUM ('USER', 'PARTY', 'TOWN')                                    NOT NULL,
-    description        VARCHAR(255)                                                      NOT NULL,
-    is_repeatable      BOOLEAN                                                           NOT NULL DEFAULT FALSE,
-    daily_repeat_limit SMALLINT                                                          NOT NULL DEFAULT 1,
-    rewards            JSON                                                              NOT NULL,
-    missions           JSON                                                              NOT NULL
+    id                 BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name               VARCHAR(30)  NOT NULL,
+    quest_type         ENUM ('NORMAL', 'REPEAT', 'STORY', 'ACHIEVEMENT', 'CLASS_CHANGE'),
+    scope_type         ENUM ('USER', 'PARTY', 'TOWN'),
+    description        VARCHAR(255) NOT NULL,
+    is_repeatable      BOOLEAN      NOT NULL DEFAULT FALSE,
+    daily_repeat_limit SMALLINT     NOT NULL DEFAULT 1
 );
 
-CREATE TABLE user_quest_progresses
+CREATE TABLE quest_rewards
 (
-    id           INT PRIMARY KEY AUTO_INCREMENT,
-    accepted_at  DATETIME                                       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    completed_at DATETIME                                       NULL,
-    given_up_at  DATETIME                                       NULL,
-    progress     JSON                                           NULL,
-    status       ENUM ('BEFORE_START', 'ON_GOING', 'COMPLETED') NOT NULL DEFAULT 'BEFORE_START',
-    user_id      INT                                            NOT NULL,
-    quest_id     INT                                            NOT NULL,
-    CONSTRAINT fk_user_quest_progresses_users FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    CONSTRAINT fk_user_quest_progresses_quests FOREIGN KEY (quest_id) REFERENCES quests (id) ON DELETE CASCADE
+    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    type     ENUM ('MATERIAL', 'RESOURCE'),
+    target   VARCHAR(30) NOT NULL,
+    value    MEDIUMINT   NOT NULL,
+    quest_id BIGINT      NOT NULL,
+    CONSTRAINT fk_quest_id_quest_reward FOREIGN KEY (quest_id) REFERENCES quests (id)
 );
 
-CREATE TABLE town_quest_progresses
+CREATE TABLE quest_objectives
 (
-    id           INT PRIMARY KEY AUTO_INCREMENT,
-    accepted_at  DATETIME                                       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    completed_at DATETIME                                       NULL,
-    given_up_at  DATETIME                                       NULL,
-    progress     JSON                                           NULL,
-    status       ENUM ('BEFORE_START', 'ON_GOING', 'COMPLETED') NOT NULL DEFAULT 'BEFORE_START',
-    town_id      INT                                            NOT NULL,
-    quest_id     INT                                            NOT NULL,
-    CONSTRAINT fk_town_quest_progresses_towns FOREIGN KEY (town_id) REFERENCES towns (id) ON DELETE CASCADE,
-    CONSTRAINT fk_town_quest_progresses_quests FOREIGN KEY (quest_id) REFERENCES quests (id) ON DELETE CASCADE
+    id             BIGINT PRIMARY KEY AUTO_INCREMENT,
+    type           ENUM ('MATERIAL', 'MONSTER') NOT NULL,
+    target         VARCHAR(30)                  NOT NULL,
+    required_count MEDIUMINT                    NOT NULL,
+    quest_id       BIGINT                       NOT NULL,
+    CONSTRAINT fk_quest_id_quest_objectives FOREIGN KEY (quest_id) REFERENCES quests (id)
 );
+
+CREATE TABLE user_quest_progress
+(
+    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    quest_id BIGINT NOT NULL,
+    user_id  INT    NOT NULL,
+    CONSTRAINT fk_quest_id_quest_progress FOREIGN KEY (quest_id) REFERENCES quests (id),
+    CONSTRAINT fk_user_id_quest_progress FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 
 
 
