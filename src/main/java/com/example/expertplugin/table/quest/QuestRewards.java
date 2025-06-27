@@ -10,17 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestRewards {
 
-    private Long id;
-    private Quest questId;
-    private EntityType type;
-    private String target;
-    private Integer value;
+    private Long id; // 식별자
+    private Quest questId; // 퀘스트 외래키
+    private EntityType type; // 보상 타입
+    private String target; // 보상
+    private Integer value; // 값
 
-    /*
-       식별자
-       퀘스트 외래키
-       보상타입
-       보상
-       값
-     */
 }

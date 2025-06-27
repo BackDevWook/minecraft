@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -14,30 +16,40 @@ import java.util.List;
 @AllArgsConstructor
 public class Quest {
 
-    private Integer id;
-    private String name;
-    private String description;
-    private QuestTypes questType;
-    private ScopeTypes scopeType;
-    private boolean isRepeatable;
-    private Short dailyRepeatLimit;
+    private Long id; // 식별자
+    private String name; // 퀘스트 이름
+    private QuestTypes questType; // 퀘스트 타입(일반, 스토리, 반복, 전직 등)
+    private ScopeTypes scopeType; // 퀘스트 주체(유저, 파티, 마을 등)
+    private String description; // 퀘스트 설명
+    private boolean isRepeatable; // 반복 가능 여부
+    private Short dailyRepeatLimit; // 하루 최대 반복 가능 횟수
 
     // 참조용
-    private List<QuestObjectives> objectives;
-    private List<QuestRewards> rewards;
+    private List<QuestObjectives> objectives = Collections.synchronizedList(new ArrayList<>()); // 퀘스트 목표 리스트
+    private List<QuestRewards> rewards = Collections.synchronizedList(new ArrayList<>()); // 퀘스트 보상  리스트
 
+    public Quest(Long id,
+                 String name,
+                 QuestTypes questType,
+                 ScopeTypes scopeType,
+                 String description,
+                 boolean isRepeatable,
+                 Short dailyRepeatLimit) {
+        this.id = id;
+        this.name = name;
+        this.questType = questType;
+        this.scopeType = scopeType;
+        this.description = description;
+        this.isRepeatable = isRepeatable;
+        this.dailyRepeatLimit = dailyRepeatLimit;
+    }
 
-    /*
-        식별자
-        퀘스트 이름
-        퀘스트 설명
-        퀘스트 타입(일반, 스토리, 반복, 전직 등)
-        퀘스트 주체(유저, 파티, 마을 등)
-        퀘스트 반복 가능 여부
-        하루 최대 반복 가능 수
+    public void addObjective(QuestObjectives objective) {
+        objectives.add(objective);
+    }
 
-        - 참조용 -
-        퀘스트 목표 리스트
-        보상 리스트
-     */
+    public void addReward(QuestRewards reward) {
+        rewards.add(reward);
+    }
+
 }

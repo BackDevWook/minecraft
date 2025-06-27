@@ -10,17 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestObjectives {
 
-    private Long id;
-    private Quest questId;
-    private EntityType type;
-    private String target;
-    private Integer RequiredCount;
+    private Long id; // 식별자
+    private Quest questId; // 퀘스트 외래키
+    private EntityType type; // 엔티티 타입 (material, resource 등)
+    private String target; // 목표
+    private Integer RequiredCount; // 요구 수량
 
-    /*
-        식별자
-        퀘스트 외래키
-        목표 타입
-        목표물
-        요구 수치  ex) 10마리 잡기
-     */
 }
